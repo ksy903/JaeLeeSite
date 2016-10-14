@@ -237,8 +237,8 @@ function convection(type, value1, value2, value3, value4){
 }
 
 function round(num){
-    var val = (parseFloat(num).toPrecision(3));
-	return val;
+    //var val = (parseFloat(num).toPrecision(3));
+	return num;
 }
 
 function clearAll(){
