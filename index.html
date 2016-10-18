@@ -3,6 +3,7 @@
 	<title>Testing Equations</title>
 	<meta charset="utf-8">
 	<script type = "text/javascript" src="./equations.js"></script>
+	<script type = "text/javascript" src="./products.js"></script>
 </head>
 <body>
 	<h1>Equations</h1>
@@ -17,6 +18,7 @@
 	<p id='1-answer'></p>
     <input type='button' onclick='calculationValidate(1);' value='Calculate!'></button>
     <input type='button' onclick='clearAll();' value='Clear'></button>
+	<input type='button' onclick='saveWattage();' value='Save Wattage'></button>
     
     <h3>TEMPERATURE CONVERSION CALCULATOR</h3>
 	<p>Enter °C</p>
@@ -71,4 +73,10 @@
 	<input type ="text" size = "5" placeholder = '0.0 Q' onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46' id="Q"></input>
 	<br><br><input type='button' onclick='calculationValidate(6);' value='Calculate!'></button>
 	<input type='button' onclick='clearAll();' value='Clear'></button>
+	
+	<h3>Wattage Value Saved</h3>
+	<p> Wattage: <value id="wattValue"></value></p>
+	<input type='button' onclick='getProducts();' value='Find Reccomended Products'></button>
+	<ul id="productList">
+	</ul>
 </body>

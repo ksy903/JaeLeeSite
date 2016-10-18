@@ -263,3 +263,8 @@ function clearAll(){
     document.getElementById("temperaturedifferential").value = null;
     document.getElementById("Q").value = null;
 }
+
+function saveWattage(){
+	var wattage = document.getElementById("Watts").value;
+	document.getElementById("wattValue").innerHTML = wattage;
+}
