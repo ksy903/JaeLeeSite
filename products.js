@@ -1,6 +1,7 @@
 function getProducts(){
 	var wattage = document.getElementById("wattValue").innerHTML;
 	wattage = wattage / 1000;
+	document.getElementById("productList").innerHTML = "";
 	if(wattage<=Series1n2n3.powerUpper && wattage>=Series1n2n3.powerLower){
 		document.getElementById("productList").innerHTML = document.getElementById("productList").innerHTML + "<li>Series I, II, III</li>";
 		alert("Series I, II, III");
