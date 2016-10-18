@@ -163,13 +163,13 @@ function calculationValidate(calculationType){
 
 function power_flowrate_temp (type, value1, value2){
 	if(type == 1){
-		return round((value2 * 3) / value1);
+		return round((value2 * 2.5) / value1);
 	}
 	else if(type == 2){
-		return round((value2 * 3) / value1);
+		return round((value2 * 2.5) / value1);
 	}
     else{
-        return round((value1 * value2) / 3);
+        return round((value1 * value2) / 2.5);
     }
 }
 
