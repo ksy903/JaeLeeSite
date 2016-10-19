@@ -268,3 +268,8 @@ function saveWattage(){
 	var wattage = document.getElementById("Watts").value;
 	document.getElementById("wattValue").innerHTML = wattage;
 }
+
+function saveSCFM(){
+	var SCFM = document.getElementById("SCFM").value;
+	document.getElementById("SCFMValue").innerHTML = SCFM;
+}
