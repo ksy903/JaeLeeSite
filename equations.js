@@ -262,7 +262,7 @@ function clearAll(){
     document.getElementById("specificheat").value = null;
     document.getElementById("temperaturedifferential").value = null;
     document.getElementById("Q").value = null;
-    doucment.getElementById("productList").innerHTML = "";
+    document.getElementById("productList").innerHTML = "";
 }
 
 function saveWattage(){
