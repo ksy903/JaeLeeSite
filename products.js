@@ -2,29 +2,30 @@ function getProducts(){
 	var wattage = document.getElementById("wattValue").innerHTML;
 	wattage = wattage / 1000;
 	document.getElementById("productList").innerHTML = "";
-	if(wattage<=Series1n2n3.powerUpper && wattage>=Series1n2n3.powerLower){
+	var SCFM = document.getElementById("SCFMValue").innerHTML;
+	if(wattage<=Series1n2n3.powerUpper && wattage>=Series1n2n3.powerLower && SCFM <= Series1n2n3.maxAirPressureinPsi){
 		document.getElementById("productList").innerHTML = document.getElementById("productList").innerHTML + "<li>Series I, II, III</li>";
 		alert("Series I, II, III");
 	}
-	if(wattage<=HotAirTools.powerUpper && wattage>=HotAirTools.powerLower){
+	if(wattage<=HotAirTools.powerUpper && wattage>=HotAirTools.powerLower && SCFM <= Series1n2n3.maxAirPressureinPsi){
 		document.getElementById("productList").innerHTML = document.getElementById("productList").innerHTML + "<li>Hot Air Tools</li>";
 	}
-	if(wattage<=Serpentine2n6.powerUpper && wattage>=Serpentine2n6.powerLower){
+	if(wattage<=Serpentine2n6.powerUpper && wattage>=Serpentine2n6.powerLower && SCFM <= Serpentine2n6.maxAirPressureinPsi){
 		document.getElementById("productList").innerHTML = document.getElementById("productList").innerHTML + "<li>Serpentine II, VI</li>";
 	}
-	if(wattage<=ThreadedInLine.powerUpper && wattage>=ThreadedInLine.powerLower){
+	if(wattage<=ThreadedInLine.powerUpper && wattage>=ThreadedInLine.powerLower && SCFM <= ThreadedInLine.maxAirPressureinPsi){
 		document.getElementById("productList").innerHTML = document.getElementById("productList").innerHTML + "<li>Threaded In-Line</li>";
 	}
-	if(wattage<=SureHeatJet.powerUpper && wattage>=SureHeatJet.powerLower){
+	if(wattage<=SureHeatJet.powerUpper && wattage>=SureHeatJet.powerLower && SCFM <= SureHeatJet.maxAirPressureinPsi){
 		document.getElementById("productList").innerHTML = document.getElementById("productList").innerHTML + "<li>SureHeat Jet</li>";
 	}
-	if(wattage<=SureHeatMax.powerUpper && wattage>=SureHeatMax.powerLower){
+	if(wattage<=SureHeatMax.powerUpper && wattage>=SureHeatMax.powerLower && SCFM <= SureHeatMax.maxAirPressureinPsi){
 		document.getElementById("productList").innerHTML = document.getElementById("productList").innerHTML + "<li>SureHeat Max</li>";
 	}
-	if(wattage<=SureHeatMaxHT.powerUpper && wattage>=SureHeatMaxHT.powerLower){
+	if(wattage<=SureHeatMaxHT.powerUpper && wattage>=SureHeatMaxHT.powerLower && SCFM <= SureHeatMaxHT.maxAirPressureinPsi){
 		document.getElementById("productList").innerHTML = document.getElementById("productList").innerHTML + "<li>SureHeat MAX HT</li>";
 	}
-	if(wattage<=HeatGuns.powerUpper && wattage>=HeatGuns.powerLower){
+	if(wattage<=HeatGuns.powerUpper && wattage>=HeatGuns.powerLower && SCFM <= HeatGuns.maxAirPressureinPsi){
 		document.getElementById("productList").innerHTML = document.getElementById("productList").innerHTML + "<li>Heat Guns</li>";
 	}
 }
@@ -35,7 +36,7 @@ var Series1n2n3 = {
 	maxAirTempinF: 1600, 
 	maxAirTempinF: 871, 
 	maxAirPressureinPsi: 7,
-	maxAirPressureinPsi: 0.5,
+	maxAirPressureinBar: 0.5,
 	UseWithBlower: false,
 	Description: "Inexpensive Spot-Heating Applications, Quartz Insulator Tube, Open or Nozzle End, Single Phase"
 };
