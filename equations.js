@@ -128,7 +128,7 @@ function calculationValidate(calculationType){
             alert("You need to leave two blank for the answer");
         }
     }
-    else{
+    else if(calculationType == 6){
         var a = document.getElementById("density").value;
         var b = document.getElementById("volumeflowrate").value;
         var c = document.getElementById("specificheat").value;
@@ -159,86 +159,144 @@ function calculationValidate(calculationType){
             alert("You need to leave one blank for the answer");
         }
     }
+    else if(calculationType == 7){
+        var a = document.getElementById("tempIn").value;
+        var b = document.getElementById("tempOut").value;
+        var c = document.getElementById("deltaTemp").value;
+        if((a == "" || a == null) && (b == "" || b == null) && (c == "" || c == null)){
+            alert("No inputs");
+        }
+        else if(isNaN(a) || isNaN(b) || isNaN(c)){
+            alert("One or more of your inputs are not a number");
+        }
+        else if(a == "" || a == null){
+            document.getElementById("tempIn").value = delta_temp(1, b, c);
+        }        else if(b == "" || b == null){
+            document.getElementById("tempOut").value = delta_temp(2, a, c);
+        }
+        else if(c == "" || c == null){
+            document.getElementById("deltaTemp").value = delta_temp(3, a, b);
+        }
+        else{
+            alert("You need to leave one blank for the answer");
+        }
+    }
+    else if(calculationType == 8){
+        var a = document.getElementById("PSI").value;
+        var b = document.getElementById("BAR").value;
+        
+        if((a == "" || a == null) && (b == "" || b == null)){
+            alert("No inputs");
+        }
+        else if(isNaN(a) || isNaN(b)){
+            alert("One or more of your inputs are not a number");
+        }
+        else if(a == "" || a == null){
+            document.getElementById("PSI").value = psi_bar_conversion(1, b);
+        }
+        else if(b == "" || b == null){
+            document.getElementById("BAR").value = psi_bar_conversion(2, a);
+        }
+        else{
+            alert("You need to leave one blank for the answer");
+        }
+    }
 }
 
 function power_flowrate_temp (type, value1, value2){
-	if(type == 1){
-		return round((value2 * 2.5) / value1);
-	}
-	else if(type == 2){
-		return round((value2 * 2.5) / value1);
-	}
+    if(type == 1){
+ 	return ((value2 * 2.5) / value1);
+    }
+    else if(type == 2){
+	return ((value2 * 2.5) / value1);
+    }
     else{
-        return round((value1 * value2) / 2.5);
+        return ((value1 * value2) / 2.5);
     }
 }
 
 function temp_conversion (type, value){
     if(type == 1){
-        return round(((value-32)*5)/9);
+        return (((value-32)*5)/9);
     }
     else{
-        return round(((value*9)/5)+32);
+        return (((value*9)/5)+32);
     }
 }
 
 function three_phase_unit (type, value1, value2){
     if(type == 1){
-		return round(value1 * value2 * Math.sqrt(3));
+		return (value1 * value2 * Math.sqrt(3));
 	}
 	else if(type == 2){
-		return round(value1 / (value2 * Math.sqrt(3)));
+		return (value1 / (value2 * Math.sqrt(3)));
 	}
     else{
-        return round(value1 / (value2 * Math.sqrt(3)));
+        return (value1 / (value2 * Math.sqrt(3)));
     }
 }
 
 function single_phase_unit(type, value1, value2){
     if(type == 1){
-		return round(value1 * value2);
+		return (value1 * value2);
 	}
 	else if(type == 2){
-		return round(value1 / value2);
+		return (value1 / value2);
 	}
     else{
-        return round(value1 / value2);
+        return (value1 / value2);
     }
 }
 
 function ohms_law(type, value1, value2){
     if(type == 1){
-		return round(value1 * value2);
+		return (value1 * value2);
 	}
 	else if(type == 2){
-		return round(value1 / value2);
+		return (value1 / value2);
 	}
 	else if(type == 3){
-		return round(Math.sqrt(value1 * value2));
+		return (Math.sqrt(value1 * value2));
 	}
     else if(type == 4){
-        return round(Math.sqrt(value1 / value2));
+        return (Math.sqrt(value1 / value2));
     }
     else if(type == 5){
-        return round(Math.pow(value1, 2) / value2);
+        return (Math.pow(value1, 2) / value2);
     }
     else{
-        return round(value1 / Math.pow(value2, 2));
+        return (value1 / Math.pow(value2, 2));
     }
 }
 
 function convection(type, value1, value2, value3, value4){
     if(type == 1){
-        return round(value1*value2*value3*value4);
+        return (value1*value2*value3*value4);
     }
     else{
-        return round(value1/(value2*value3*value4));
+        return (value1/(value2*value3*value4));
     }
 }
 
-function round(num){
-    //var val = (parseFloat(num).toPrecision(3));
-	return num;
+function delta_temp(type, value1, value2){
+    if(type == 1){
+ 	return (value1 + value2);
+    }
+    else if(type == 2){
+	return (value2 - value1);
+    }
+    else{
+        return (value1 - value2);
+    }
+}
+
+function psi_bar_conversion(type, value){
+	if(type == 1){
+	    return (value / 0.06894757279);
+	}
+	else{
+	    return (value * 0.06894757279);
+	}
 }
 
 function clearAll(){
