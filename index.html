@@ -75,6 +75,24 @@
 	<br><br><input type='button' onclick='calculationValidate(6);' value='Calculate!'></button>
 	<input type='button' onclick='clearAll();' value='Clear'></button>
 	
+    <h3>DELTA T (∆ T) = TEMP<sub>out</sub> - TEMP<sub>in</sub></h3>
+	<p>Enter T<sub>out</sub></p>
+	<input type ="text" size = "5" placeholder = '0.0 °F' onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46' id="tempIn"></input>
+	<p>Enter T<sub>in</sub></p>
+	<input type ="text" size = "5" placeholder = '0.0 °F' onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46' id="tempOut"></input>
+	<p>Enter ∆ T</p>
+	<input type ="text" size = "5" placeholder = '0.0 °F' onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46' id="deltaTemp"></input>
+	<br><br><input type='button' onclick='calculationValidate(7);' value='Calculate!'></button>
+	<input type='button' onclick='clearAll();' value='Clear'></button>	
+
+    <h3>PSI to BAR conversion</h3>
+	<p>Enter PSI</p>
+	<input type ="text" size = "5" placeholder = '0.0 °F' onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46' id="PSI"></input>
+	<p>Enter BAR</p>
+	<input type ="text" size = "5" placeholder = '0.0 °F' onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46' id="BAR"></input>
+	<br><br><input type='button' onclick='calculationValidate(8);' value='Calculate!'></button>
+	<input type='button' onclick='clearAll();' value='Clear'></button>		
+
 	<h3>Wattage Value Saved</h3>
 	<p> Wattage: <value id="wattValue"></value></p>
 	<h3>SCFM Value Saved</h3>
