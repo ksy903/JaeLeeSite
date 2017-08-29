@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+        <title>Payroll Calc</title>
+    </head>
+    <body style = "height:100vh;">
+        <div id="head" style="height:20%; background-color:#f27f65;">
+            <center>
+            <div id="head-title" style="padding:3px;font-size:9vh;">
+                Payroll Calculator
+            </div>
+            <center>
+        </div>
+        
+        <div id="body" style="height:80%; background-color:#57f9cb;line-height: 1;">
+            <center>
+            <div id="head-title" style="font-size:5vh; margin: 0;padding: 0;border: 0;font-size: 200%;">
+                <table>
+                <tr>
+                    <th>
+                    <input type="number" style="font-size:5vh; width:15vh; height:5vh;" id="hour"></input>
+                    </th>
+                    <th>
+                    <p>Hours</p>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                    <input type="number" style="font-size:5vh; width:15vh; height:5vh;" id="minute"></input>
+                    </th>
+                    <th>
+                    <p>Minute</p>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                    <input type="number" style="font-size:5vh; width:15vh; height:5vh;" id="payrate"></input>
+                    </th>
+                    <th>
+                    <p>Payrate</p>
+                    </th>
+                </tr>
+                </table>
+                <button onclick="calculateTax();" style="height:40px; width:80px;">Calculate</button>
+                
+                <table>
+                <tr>
+                    <th>
+                    <p>Total:</p>
+                    </th>
+                    <th>
+                    <p id="x">0.00</p>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                    <p>Tax (0.076):</p>
+                    </th>
+                    <th>
+                    <p id="y">0.00</p>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                    <p>Final Total:</p>
+                    </th>
+                    <th>
+                    <p id="z">0.00</p>
+                    </th>
+                </tr>
+                </table>
+            </div>
+            </center>
+        </div>
+        <script type="text/javascript">         
+            function calculateTax(){
+                var hr, min, pay, tot, tax, fin;
+                hr = document.getElementById("hour").value;
+                min = document.getElementById("minute").value;
+                pay = document.getElementById("payrate").value;
+                console.log(hr + " " + min + " " + pay);
+                min = min * 0.01;
+                tot = (hr + min) * pay;
+                tax = tot * 0.076;
+                fin = tot - tax;
+                
+                document.getElementById("x").innerHTML = tot.toFixed(2);
+                document.getElementById("y").innerHTML = tax.toFixed(2);
+                document.getElementById("z").innerHTML = fin.toFixed(2);
+            }
+            
+        </script>
+    </body>
+</html>
