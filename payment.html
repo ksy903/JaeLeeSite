@@ -22,11 +22,13 @@
         
         <div id="body" style="height:80%; background-color:#57f9cb;line-height: 1;">
             <center>
+			<!--
             <div id="head-title" style="font-size:5vh; margin: 0;padding: 0;border: 0;font-size: 200%;">
+			
                 <table>
                 <tr>
                     <th>
-                    <input type="number" style="font-size:5vh; width:15vh; height:5vh;" id="hour"></input>
+                    <input type="number" style="font-size:5vh; width:15vh; height:5vh;" class="userIO" id="hour"></input>
                     </th>
                     <th>
                     <p>Hours</p>
@@ -34,7 +36,7 @@
                 </tr>
                 <tr>
                     <th>
-                    <input type="number" style="font-size:5vh; width:15vh; height:5vh;" id="minute"></input>
+                    <input type="number" style="font-size:5vh; width:15vh; height:5vh;" class="userIO" id="minute"></input>
                     </th>
                     <th>
                     <p>Minute</p>
@@ -42,7 +44,7 @@
                 </tr>
                 <tr>
                     <th>
-                    <input type="number" style="font-size:5vh; width:15vh; height:5vh;" id="payrate"></input>
+                    <input type="number" style="font-size:5vh; width:15vh; height:5vh;" class="userIO" id="payrate"></input>
                     </th>
                     <th>
                     <p>Payrate</p>
@@ -57,7 +59,7 @@
                     <p>Total:</p>
                     </th>
                     <th>
-                    <p id="x">0.00</p>
+                    <p class="userIO2" id="x">0.00</p>
                     </th>
                 </tr>
                 <tr>
@@ -65,7 +67,7 @@
                     <p>Tax (0.076):</p>
                     </th>
                     <th>
-                    <p id="y">0.00</p>
+                    <p class="userIO2" id="y">0.00</p>
                     </th>
                 </tr>
                 <tr>
@@ -73,12 +75,75 @@
                     <p>Final Total:</p>
                     </th>
                     <th>
-                    <p id="z">0.00</p>
+                    <p class="userIO2" id="z">0.00</p>
                     </th>
                 </tr>
                 </table>
             </div>
-            </center>
+            
+			-->
+			<div id="head-title" style="font-size:5vh; margin: 0;padding: 0;border: 0;font-size: 200%;">
+				<table>
+					<tr>
+						<h3>시작 시간(시, 분):</h3>
+					</tr>
+					<tr>
+						<th>
+						<input type="number" style="font-size:5vh; width:15vh; height:5vh;" class="userIO" id="start_hour"></input>
+						</th>
+						<th>
+						<p>시</p>
+						</th>
+					</tr>
+					<tr>
+						<th>
+						<input type="number" style="font-size:5vh; width:15vh; height:5vh;" class="userIO" id="start_minute"></input>
+						</th>
+						<th>
+						<p>분</p>
+						</th>
+					</tr>
+					<tr>
+						<th>
+						<select id="start_select">
+							<option value="start_am">오전</option>
+							<option value="start_pm">오후</option>
+						</select>
+						</th>
+					</tr>
+					<tr>
+						<h3>끝 시간(시, 분):</h3>
+					</tr>
+					<tr>
+						<th>
+						<input type="number" style="font-size:5vh; width:15vh; height:5vh;" class="userIO" id="end_hour"></input>
+						</th>
+						<th>
+						<p>시</p>
+						</th>
+					</tr>
+					<tr>
+						<th>
+						<input type="number" style="font-size:5vh; width:15vh; height:5vh;" class="userIO" id="end_minute"></input>
+						</th>
+						<th>
+						<p>분</p>
+						</th>
+					</tr>
+					<tr>
+						<th>
+						<select id="end_select">
+							<option value="end_am">오전</option>
+							<option value="end_pm">오후</option>
+						</select>
+						</th>
+					</tr>
+                </table>
+				<button onclick="calculateHours();" style="height:40px; width:80px;">계산</button>
+				<button onclick="clearFields();" style="height:40px; width:80px;">지우기</button>
+				<h3>시간: <div id="time_result" class="userIO2">00:00</div></h3>
+			</div>
+			</center>
         </div>
         <script type="text/javascript">         
             function calculateTax(){
@@ -97,6 +162,55 @@
                 document.getElementById("z").innerHTML = fin.toFixed(2);
             }
             
+			function calculateHours(){
+				var startH = parseInt(document.getElementById("start_hour").value);
+				var startM = parseInt(document.getElementById("start_minute").value);
+				var endH = parseInt(document.getElementById("end_hour").value);
+				var endM = parseInt(document.getElementById("end_minute").value);
+				var startHalf = parseInt(document.getElementById("start_select").selectedIndex);
+				var endHalf = parseInt(document.getElementById("end_select").selectedIndex);
+				
+				console.log(startH + " " + startM + " " + endH + " " + endM + " " + startHalf  + " " + endHalf);
+				
+				if(startHalf == 1){
+					startH += 12;
+				}
+				if(endHalf == 1){
+					endH += 12;
+				}
+				
+				console.log(startH + " " + startM + " " + endH + " " + endM + " " + startHalf  + " " + endHalf);
+				
+				var finalH = 0;
+				var finalM = 0;
+				
+				if(endM - startM < 0){
+					finalH += ((endH - startH) - 1);
+					finalM += 60 - (startM - endM);
+					
+				}
+				else{
+					finalH += (endH - startH);
+					finalM += (endM - startM);
+				}
+				
+				console.log(finalH + " " + finalM);
+				
+				document.getElementById("time_result").innerHTML = (("0" + finalH).slice(-2)) + ":" + (("0" + finalM).slice(-2));
+			}
+			
+			function clearFields(){
+				var inputsToClear = document.getElementsByClassName('userIO');
+			    var resultsToZero = document.getElementsByClassName('userIO2');
+				
+				for(var i=0;i<inputsToClear.length;i++){
+					inputsToClear[i].value = "";
+				}
+				
+				for(var i=0;i<resultsToZero.length;i++){
+					resultsToZero[i].innerHTML = 0.0;
+				}
+			}
         </script>
     </body>
 </html>
