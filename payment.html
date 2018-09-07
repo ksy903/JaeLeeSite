@@ -20,7 +20,7 @@
             <center>
         </div>
         
-        <div id="body" style="height:80%; background-color:#57f9cb;line-height: 1;">
+        <div id="body" style="height:1600px; background-color:#57f9cb;line-height: 1;">
             <center>
 			<!--
             <div id="head-title" style="font-size:5vh; margin: 0;padding: 0;border: 0;font-size: 200%;">
@@ -85,7 +85,9 @@
 			<div id="head-title" style="font-size:5vh; margin: 0;padding: 0;border: 0;font-size: 200%;">
 				<table>
 					<tr>
-						<h3>시작 시간(시, 분):</h3>
+                        <th>
+                            <h3>시작 시간(시, 분):</h3>
+                        </th>
 					</tr>
 					<tr>
 						<th>
@@ -112,7 +114,9 @@
 						</th>
 					</tr>
 					<tr>
-						<h3>끝 시간(시, 분):</h3>
+                        <th>
+                            <h3>끝 시간(시, 분):</h3>
+                        </th>
 					</tr>
 					<tr>
 						<th>
@@ -139,13 +143,24 @@
 						</th>
 					</tr>
                 </table>
-				<button onclick="calculateHours();" style="height:40px; width:80px;">계산</button>
-				<button onclick="clearFields();" style="height:40px; width:80px;">지우기</button>
+                <button onclick="calculateHours();" style="height:40px; width:80px;">더하기</button>
+				
 				<h3>시간: <div id="time_result" class="userIO2">00:00</div></h3>
+				
+                
+                <input type="number" style="font-size:5vh; width:15vh; height:5vh;display:inline-block;" class="userIO2" id="hourlyrate"></input>
+				<p style="display:inline-block;font-weight:bold">시간당 $</p>
+                <br>
+                <button onclick="calculatePay();" style="height:40px; width:80px;">계산</button>
+                <br>
+                <h3>합계: <div id="pay_result" class="userIO2">$0.00</div></h3>
 			</div>
 			</center>
         </div>
-        <script type="text/javascript">         
+        <script type="text/javascript">
+            var finalH=0, finalM=0;
+            
+            /*
             function calculateTax(){
                 var hr, min, pay, tot, tax, fin;
                 hr = document.getElementById("hour").value;
@@ -161,6 +176,7 @@
                 document.getElementById("y").innerHTML = tax.toFixed(2);
                 document.getElementById("z").innerHTML = fin.toFixed(2);
             }
+            */
             
 			function calculateHours(){
 				var startH = parseInt(document.getElementById("start_hour").value);
@@ -172,17 +188,14 @@
 				
 				console.log(startH + " " + startM + " " + endH + " " + endM + " " + startHalf  + " " + endHalf);
 				
-				if(startHalf == 1){
+				if(startHalf == 1 && startH != 12){
 					startH += 12;
 				}
-				if(endHalf == 1){
+				if(endHalf == 1 && endH != 12){
 					endH += 12;
 				}
 				
 				console.log(startH + " " + startM + " " + endH + " " + endM + " " + startHalf  + " " + endHalf);
-				
-				var finalH = 0;
-				var finalM = 0;
 				
 				if(endM - startM < 0){
 					finalH += ((endH - startH) - 1);
@@ -196,21 +209,37 @@
 				
 				console.log(finalH + " " + finalM);
 				
+                removeHrFromMin();
 				document.getElementById("time_result").innerHTML = (("0" + finalH).slice(-2)) + ":" + (("0" + finalM).slice(-2));
+                clearFields();
 			}
 			
 			function clearFields(){
 				var inputsToClear = document.getElementsByClassName('userIO');
-			    var resultsToZero = document.getElementsByClassName('userIO2');
-				
+			    
 				for(var i=0;i<inputsToClear.length;i++){
 					inputsToClear[i].value = "";
 				}
-				
-				for(var i=0;i<resultsToZero.length;i++){
-					resultsToZero[i].innerHTML = 0.0;
-				}
 			}
+            
+            function removeHrFromMin(){
+                while(finalM >= 60){
+                    finalM -= 60;
+                    finalH++;
+                }
+            }
+            
+            function calculatePay(){
+                var hourlyrate=parseInt(document.getElementById("hourlyrate").value);
+                var finalPay = 0.0;
+                
+                finalPay += hourlyrate * finalH;
+                console.log(finalPay);
+                finalPay += hourlyrate * (finalM / 60);
+                console.log(finalPay);
+                
+                document.getElementById("pay_result").innerHTML = ("$" + finalPay +"00");
+            }
         </script>
     </body>
 </html>
