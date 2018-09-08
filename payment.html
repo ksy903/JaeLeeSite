@@ -14,76 +14,29 @@
     <body >
         <div id="head" style="height:20%; background-color:#f27f65;">
             <center>
-            <div id="head-title" style="padding:3px;font-size:9vh;">
+            <div id="head-title" style="padding:10px;font-size:9vh;">
                 Payroll Calculator
             </div>
             <center>
         </div>
         
-        <div id="body" style="height:1600px; background-color:#57f9cb;line-height: 1;">
+        <div id="body" style="height:2000px; background-color:#57f9cb;line-height: 1;">
             <center>
-			<!--
-            <div id="head-title" style="font-size:5vh; margin: 0;padding: 0;border: 0;font-size: 200%;">
-			
-                <table>
-                <tr>
-                    <th>
-                    <input type="number" style="font-size:5vh; width:15vh; height:5vh;" class="userIO" id="hour"></input>
-                    </th>
-                    <th>
-                    <p>Hours</p>
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                    <input type="number" style="font-size:5vh; width:15vh; height:5vh;" class="userIO" id="minute"></input>
-                    </th>
-                    <th>
-                    <p>Minute</p>
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                    <input type="number" style="font-size:5vh; width:15vh; height:5vh;" class="userIO" id="payrate"></input>
-                    </th>
-                    <th>
-                    <p>Payrate</p>
-                    </th>
-                </tr>
-                </table>
-                <button onclick="calculateTax();" style="height:40px; width:80px;">Calculate</button>
-                
-                <table>
-                <tr>
-                    <th>
-                    <p>Total:</p>
-                    </th>
-                    <th>
-                    <p class="userIO2" id="x">0.00</p>
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                    <p>Tax (0.076):</p>
-                    </th>
-                    <th>
-                    <p class="userIO2" id="y">0.00</p>
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                    <p>Final Total:</p>
-                    </th>
-                    <th>
-                    <p class="userIO2" id="z">0.00</p>
-                    </th>
-                </tr>
-                </table>
-            </div>
-            
-			-->
-			<div id="head-title" style="font-size:5vh; margin: 0;padding: 0;border: 0;font-size: 200%;">
+			<div id="head-title" style="font-size:5vh; margin: 0;padding-top: 20px;border: 0;font-size: 200%;">
 				<table>
+                    <tr>
+						<th>
+						<select id="date" style="font-size:30px">
+							<option value="monday">월요일</option>
+                            <option value="tuesday">화요일</option>
+                            <option value="wednesday">수요일</option>
+                            <option value="thursday">목요일</option>
+                            <option value="friday">금요일</option>
+                            <option value="saturday">토요일</option>
+                            <option value="sunday">일요일</option>
+						</select>
+						</th>
+					</tr>
 					<tr>
                         <th>
                             <h3>시작 시간(시, 분):</h3>
@@ -107,7 +60,7 @@
 					</tr>
 					<tr>
 						<th>
-						<select id="start_select">
+						<select id="start_select" style="font-size:30px">
 							<option value="start_am">오전</option>
 							<option value="start_pm">오후</option>
 						</select>
@@ -136,7 +89,7 @@
 					</tr>
 					<tr>
 						<th>
-						<select id="end_select">
+						<select id="end_select" style="font-size:30px">
 							<option value="end_am">오전</option>
 							<option value="end_pm">오후</option>
 						</select>
@@ -154,31 +107,17 @@
                 <button onclick="calculatePay();" style="height:40px; width:80px;">계산</button>
                 <br>
                 <h3>합계: <div id="pay_result" class="userIO2">$0.00</div></h3>
+                
+                <table id="timestamp" style="font-size:5vh; margin: 0;padding-top: 20px;border: 0;font-size: 100%;">
+                </table>
 			</div>
 			</center>
         </div>
         <script type="text/javascript">
             var finalH=0, finalM=0;
             
-            /*
-            function calculateTax(){
-                var hr, min, pay, tot, tax, fin;
-                hr = document.getElementById("hour").value;
-                min = document.getElementById("minute").value;
-                pay = document.getElementById("payrate").value;
-                console.log(hr + " " + min + " " + pay);
-                min = min * 0.01;
-                tot = (hr + min) * pay;
-                tax = tot * 0.076;
-                fin = tot - tax;
-                
-                document.getElementById("x").innerHTML = tot.toFixed(2);
-                document.getElementById("y").innerHTML = tax.toFixed(2);
-                document.getElementById("z").innerHTML = fin.toFixed(2);
-            }
-            */
-            
 			function calculateHours(){
+                var date = parseInt(document.getElementById("start_select").selectedIndex);
 				var startH = parseInt(document.getElementById("start_hour").value);
 				var startM = parseInt(document.getElementById("start_minute").value);
 				var endH = parseInt(document.getElementById("end_hour").value);
@@ -197,21 +136,27 @@
 				
 				console.log(startH + " " + startM + " " + endH + " " + endM + " " + startHalf  + " " + endHalf);
 				
+                var resultH = 0, resultM = 0;
 				if(endM - startM < 0){
-					finalH += ((endH - startH) - 1);
-					finalM += 60 - (startM - endM);
+					resultH += ((endH - startH) - 1);
+					resultM += 60 - (startM - endM);
 					
 				}
 				else{
-					finalH += (endH - startH);
-					finalM += (endM - startM);
+					resultH += (endH - startH);
+					resultM += (endM - startM);
 				}
+                finalH += resultH;
+                finalM += resultM;
 				
 				console.log(finalH + " " + finalM);
 				
                 removeHrFromMin();
-				document.getElementById("time_result").innerHTML = (("0" + finalH).slice(-2)) + ":" + (("0" + finalM).slice(-2));
+				document.getElementById("time_result").innerHTML = formatHour(finalH) + ":" + formatHour(finalM);
                 clearFields();
+                
+                var dateNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>" + dateNames[date] + " | " + formatHour(startH) + ":" + formatHour(startM) + " - " + formatHour(endH) + ":" + formatHour(endM) + " = " + formatHour(resultH)+ ":" + formatHour(resultM) + "</p></th></tr>";
 			}
 			
 			function clearFields(){
@@ -233,12 +178,22 @@
                 var hourlyrate=parseInt(document.getElementById("hourlyrate").value);
                 var finalPay = 0.0;
                 
+                
                 finalPay += hourlyrate * finalH;
                 console.log(finalPay);
                 finalPay += hourlyrate * (finalM / 60);
-                console.log(finalPay);
+                console.log(hourlyrate + "*" + finalH + " + " + hourlyrate + "*" + (finalM/60) + " = " + finalPay);
                 
-                document.getElementById("pay_result").innerHTML = ("$" + finalPay +"00");
+                document.getElementById("pay_result").innerHTML = "$" + formatMoney(finalPay);
+                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Total Hours - " + formatHour(finalH) + ":" + formatHour(finalM) + " x Hourly Rate - " + hourlyrate + " = $" + formatMoney(finalPay) + "</p></th></tr>";
+            }
+            
+            function formatHour(hourString){
+                return (("0" + hourString).slice(-2));
+            }
+            
+            function formatMoney(moneyString){
+                return Number.parseFloat(moneyString).toFixed(2);
             }
         </script>
     </body>
