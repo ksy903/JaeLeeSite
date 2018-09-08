@@ -20,7 +20,7 @@
             <center>
         </div>
         
-        <div id="body" style="height:2000px; background-color:#57f9cb;line-height: 1;">
+        <div id="body" style="height:2500px; background-color:#57f9cb;line-height: 1;">
             <center>
 			<div id="head-title" style="font-size:5vh; margin: 0;padding-top: 20px;border: 0;font-size: 200%;">
 				<table>
@@ -108,8 +108,14 @@
                 <br>
                 <h3>합계: <div id="pay_result" class="userIO2">$0.00</div></h3>
                 
-                <table id="timestamp" style="font-size:5vh; margin: 0;padding-top: 20px;border: 0;font-size: 100%;">
-                </table>
+                <div id="timestamp_over">
+                    <center>
+                        <table id="timestamp" style="font-size:2vh; margin: 0;padding-top: 20px;border: 0;font-size: 150%;">
+                        </table>
+                    </center>
+                </div>
+                
+                <button onclick="showOnlyResults();" style="height:40px; width:80px;">결과</button>
 			</div>
 			</center>
         </div>
@@ -117,7 +123,7 @@
             var finalH=0, finalM=0;
             
 			function calculateHours(){
-                var date = parseInt(document.getElementById("start_select").selectedIndex);
+                var date = parseInt(document.getElementById("date").selectedIndex);
 				var startH = parseInt(document.getElementById("start_hour").value);
 				var startM = parseInt(document.getElementById("start_minute").value);
 				var endH = parseInt(document.getElementById("end_hour").value);
@@ -159,7 +165,25 @@
                 document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>" + dateNames[date] + " | " + formatHour(startH) + ":" + formatHour(startM) + " - " + formatHour(endH) + ":" + formatHour(endM) + " = " + formatHour(resultH)+ ":" + formatHour(resultM) + "</p></th></tr>";
 			}
 			
-			function clearFields(){
+            function calculatePay(){
+                var hourlyrate=parseFloat(document.getElementById("hourlyrate").value);
+                var finalPay = 0.0;
+                
+                
+                finalPay += hourlyrate * finalH;
+                console.log(finalPay);
+                finalPay += hourlyrate * (finalM / 60);
+                console.log(hourlyrate + "*" + finalH + " + " + hourlyrate + "*" + (finalM/60) + " = " + finalPay);
+                
+                document.getElementById("pay_result").innerHTML = "$" + formatMoney(finalPay);
+                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Total Hours - " + formatHour(finalH) + ":" + formatHour(finalM) + " x Hourly Rate - $" + formatMoney(hourlyrate) + " = $" + formatMoney(finalPay) + "</p></th></tr>";
+            }
+            
+            function showOnlyResults(){
+                document.getElementById("body").innerHTML = document.getElementById("timestamp_over").innerHTML;
+            }
+            
+            function clearFields(){
 				var inputsToClear = document.getElementsByClassName('userIO');
 			    
 				for(var i=0;i<inputsToClear.length;i++){
@@ -172,20 +196,6 @@
                     finalM -= 60;
                     finalH++;
                 }
-            }
-            
-            function calculatePay(){
-                var hourlyrate=parseInt(document.getElementById("hourlyrate").value);
-                var finalPay = 0.0;
-                
-                
-                finalPay += hourlyrate * finalH;
-                console.log(finalPay);
-                finalPay += hourlyrate * (finalM / 60);
-                console.log(hourlyrate + "*" + finalH + " + " + hourlyrate + "*" + (finalM/60) + " = " + finalPay);
-                
-                document.getElementById("pay_result").innerHTML = "$" + formatMoney(finalPay);
-                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Total Hours - " + formatHour(finalH) + ":" + formatHour(finalM) + " x Hourly Rate - " + hourlyrate + " = $" + formatMoney(finalPay) + "</p></th></tr>";
             }
             
             function formatHour(hourString){
