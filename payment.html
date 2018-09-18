@@ -110,7 +110,9 @@
                 
                 <div id="timestamp_over">
                     <center>
-                        <table id="timestamp" style="font-size:1vh; margin: 0;padding-top: 20px;border: 0;font-size: 50%;">
+                        <table id="timestamp" style="margin: 0;padding-top: 20px;border: 0;font-size: 50%;">
+                            <button onclick="biggerTxt();" style="height:40px; width:80px;">크게</button>
+                            <button onclick="smallerTxt();" style="height:40px; width:80px;">작게</button>
                         </table>
                     </center>
                 </div>
@@ -207,6 +209,20 @@
             
             function formatMoney(moneyString){
                 return Number.parseFloat(moneyString).toFixed(2);
+            }
+            
+            function biggerTxt(){
+                console.log(document.getElementById("timestamp").style.fontSize);
+                var sizeTxt = ("" + document.getElementById("timestamp").style.fontSize);
+                document.getElementById("timestamp").style.fontSize= (parseInt((sizeTxt).substr(0, sizeTxt.length-1)) + 10) + "%";
+                console.log(document.getElementById("timestamp").style.fontSize);
+            }
+            
+            function smallerTxt(){
+                console.log(document.getElementById("timestamp").style.fontSize);
+                var sizeTxt = ("" + document.getElementById("timestamp").style.fontSize);
+                document.getElementById("timestamp").style.fontSize= (parseInt((sizeTxt).substr(0, sizeTxt.length-1)) - 10) + "%";
+                console.log(document.getElementById("timestamp").style.fontSize);
             }
         </script>
     </body>
