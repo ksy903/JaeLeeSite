@@ -110,7 +110,7 @@
                 
                 <div id="timestamp_over">
                     <center>
-                        <table id="timestamp" style="font-size:2vh; margin: 0;padding-top: 20px;border: 0;font-size: 150%;">
+                        <table id="timestamp" style="font-size:1vh; margin: 0;padding-top: 20px;border: 0;font-size: 100%;">
                         </table>
                     </center>
                 </div>
@@ -174,9 +174,11 @@
                 console.log(finalPay);
                 finalPay += hourlyrate * (finalM / 60);
                 console.log(hourlyrate + "*" + finalH + " + " + hourlyrate + "*" + (finalM/60) + " = " + finalPay);
+                var taxAmt = finalPay * 0.076;
                 
                 document.getElementById("pay_result").innerHTML = "$" + formatMoney(finalPay);
-                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Total Hours - " + formatHour(finalH) + ":" + formatHour(finalM) + " x Hourly Rate - $" + formatMoney(hourlyrate) + " = $" + formatMoney(finalPay) + "</p></th></tr>";
+                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Formula = Total Hours x Hourly Rate = Net Total - (Net Total * Social/Medicare Tax) = Total before Federal</p></th></tr>";
+                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>" + formatHour(finalH) + ":" + formatHour(finalM) + " Hours x $" + formatMoney(hourlyrate) + " = $" + formatMoney(finalPay) + " - (7.6% * $" + formatMoney(finalPay) + ") = $" + formatMoney(finalPay - taxAmt) + "</p></th></tr>";
             }
             
             function showOnlyResults(){
