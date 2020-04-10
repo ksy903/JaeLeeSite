@@ -180,7 +180,7 @@
                 
                 document.getElementById("pay_result").innerHTML = "$" + formatMoney(finalPay);
                 document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Formula = Total Hours x Hourly Rate = Net Total - (Net Total * Social/Medicare Tax) = Total before Federal</p></th></tr>";
-                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>" + formatHour(finalH) + ":" + formatHour(finalM) + " Hours x $" + formatMoney(hourlyrate) + " = $" + formatMoney(finalPay) + " - (7.6% * $" + formatMoney(finalPay) + ") = $" + formatMoney(finalPay - taxAmt) + "</p></th></tr>";
+                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>" + formatHour(finalH) + ":" + formatHour(finalM) + " Hours x $" + formatMoney(hourlyrate) + " = $" + formatMoney(finalPay) + " - (7.65% * $" + formatMoney(finalPay) + ") = $" + formatMoney(finalPay - taxAmt) + "</p></th></tr>";
             }
             
             function showOnlyResults(){
