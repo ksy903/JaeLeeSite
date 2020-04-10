@@ -176,7 +176,7 @@
                 console.log(finalPay);
                 finalPay += hourlyrate * (finalM / 60);
                 console.log(hourlyrate + "*" + finalH + " + " + hourlyrate + "*" + (finalM/60) + " = " + finalPay);
-                var taxAmt = finalPay * 0.076;
+                var taxAmt = finalPay * 0.0765;
                 
                 document.getElementById("pay_result").innerHTML = "$" + formatMoney(finalPay);
                 document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Formula = Total Hours x Hourly Rate = Net Total - (Net Total * Social/Medicare Tax) = Total before Federal</p></th></tr>";
