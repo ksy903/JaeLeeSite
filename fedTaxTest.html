@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <input type="number" style="font-size:5vh; width:15vh; height:5vh;" class="userIO" id="end_hour"></input>
+        <button onclick="calculateFederalTax();" style="height:40px; width:80px;">Calc</button>
+    </body>
+    <script type="text/javascript">
+            function calculateFederalTax(){
+                var pay = parseInt(document.getElementById("end_hour").value);
+                // var maritalStatusObject = document.getElementById("maritalStatus");
+                // var maritalStatus = maritalStatusObject.options[maritalStatusObject.selectedIndex].value;
+                var withholdings = 0;
+                // if(maritalStatus == "single"){
+                    withholdings = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 25, 26, 27, 29, 30, 31, 33, 34, 35, 37, 38, 39, 40, 42, 43, 44, 46, 47, 48, 50, 51, 52, 54, 55, 56, 58, 59, 60, 62, 63, 64, 66, 67, 68, 70, 71, 72, 73, 75, 76, 77, 79, 80, 81, 83, 84, 85, 87];
+                    if(pay <= 72){
+                        var index = 0;
+                        console.log(index);
+                        console.log(withholdings[index]);
+                    }
+                    else{
+                        var remainder = (pay - 72) % 11.0;
+                        var index = Math.floor((pay - 72) / 11.0);
+                        if(remainder != 0){
+                            index += 1;
+                        }
+                        console.log(index);
+                        console.log(withholdings[index]);
+                    }
+                // }
+                // else{
+                // }
+            }
+    </script>
+</html>    
