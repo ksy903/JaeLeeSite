@@ -199,7 +199,11 @@
                 
                 document.getElementById("pay_result").innerHTML = "$" + formatMoney(finalPay);
                 document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Formula = (Total Hours x Hourly Rate = Gross Total) - (Social/Medicare Tax + Federal Tax) = Net Total</p></th></tr>";
-                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>(" + formatHour(finalH) + ":" + formatHour(finalM) + " Hours x $" + formatMoney(hourlyrate) + " = $" + formatMoney(finalPay) + ") - ((7.65% * $" + formatMoney(finalPay) + " = $" + SocMedTaxAmt + ") + " + FedTaxAmt + ") = $" + formatMoney(finalPay - SocMedTaxAmt - FedTaxAmt) + "</p></th></tr>";
+                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>(" + formatHour(finalH) + ":" + formatHour(finalM) + " Hours x $" + formatMoney(hourlyrate) + " = $" + formatMoney(finalPay) + ") - ((7.65% * $" + formatMoney(finalPay) + " = $" + formatMoney(SocMedTaxAmt) + ") + " + formatMoney(FedTaxAmt) + ") = $" + formatMoney(formatMoney(finalPay) - formatMoney(SocMedTaxAmt) - formatMoney(FedTaxAmt)) + "</p></th></tr>";
+                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Fed Tax: $" + formatMoney(FedTaxAmt) + "</p></th></tr>";
+                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Soc/Medi Tax: $" + formatMoney(SocMedTaxAmt) + "</p></th></tr>";
+                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Net Total: $" + formatMoney(formatMoney(finalPay) - formatMoney(SocMedTaxAmt) - formatMoney(FedTaxAmt)) + "</p></th></tr>";
+                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Gross Total: $" + formatMoney(finalPay) + "</p></th></tr>";
             }
             
             function showOnlyResults(){
