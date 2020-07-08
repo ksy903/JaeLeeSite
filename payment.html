@@ -26,16 +26,22 @@
 				<table>
                     <tr>
 						<th>
-						<select id="date" style="font-size:30px">
-							<option value="monday">월요일</option>
-                            <option value="tuesday">화요일</option>
-                            <option value="wednesday">수요일</option>
-                            <option value="thursday">목요일</option>
-                            <option value="friday">금요일</option>
-                            <option value="saturday">토요일</option>
-                            <option value="sunday">일요일</option>
-						</select>
+                            <select id="date" style="font-size:30px">
+                                <option value="monday">월요일</option>
+                                <option value="tuesday">화요일</option>
+                                <option value="wednesday">수요일</option>
+                                <option value="thursday">목요일</option>
+                                <option value="friday">금요일</option>
+                                <option value="saturday">토요일</option>
+                                <option value="sunday">일요일</option>
+                            </select>
 						</th>
+                         <th>
+                            <select id="maritalStatus" style="font-size:30px">
+                                <option value="single">미혼</option>
+                                <option value="married">기혼</option>
+                            </select>
+                         </th>
 					</tr>
 					<tr>
                         <th>
@@ -106,7 +112,7 @@
                 <br>
                 <button onclick="calculatePay();" style="height:40px; width:80px;">계산</button>
                 <br>
-                <h3>합계: <div id="pay_result" class="userIO2">$0.00</div></h3>
+                <h3>합계 (Gross): <div id="pay_result" class="userIO2">$0.00</div></h3>
                 
                 <div id="timestamp_over">
                     <center>
@@ -123,7 +129,6 @@
         </div>
         <script type="text/javascript">
             var finalH=0, finalM=0;
-            
 			function calculateHours(){
                 var date = parseInt(document.getElementById("date").selectedIndex);
 				var startH = parseInt(document.getElementById("start_hour").value);
@@ -170,17 +175,31 @@
             function calculatePay(){
                 var hourlyrate=parseFloat(document.getElementById("hourlyrate").value);
                 var finalPay = 0.0;
+                var SocMedTaxAmt = 0.0;
+                if (finalH < 40 || (finalH == 40 && finalM == 0)){
+                    console.log("Not Overtime");
+                    finalPay += hourlyrate * finalH;
+                    console.log(finalPay);
+                    finalPay += hourlyrate * (finalM / 60);
+                    console.log(hourlyrate + "*" + finalH + " + " + hourlyrate + "*" + (finalM/60) + " = " + finalPay);
+                    SocMedTaxAmt += finalPay * 0.0765;
+                }
+                else{
+                    console.log("Overtime");
+                    finalPay += hourlyrate * 40;
+                    console.log(finalPay);
+                    finalPay += (hourlyrate * 1.5) * (finalH - 40);
+                    console.log(finalPay);
+                    finalPay += (hourlyrate * 1.5) * (finalM / 60);
+                    console.log(hourlyrate + " * 40 + " + hourlyrate + " * " + (finalH - 40) + " + " + hourlyrate + "*" + (finalM/60) + " = " + finalPay);
+                    SocMedTaxAmt += finalPay * 0.0765;
+                }
                 
-                
-                finalPay += hourlyrate * finalH;
-                console.log(finalPay);
-                finalPay += hourlyrate * (finalM / 60);
-                console.log(hourlyrate + "*" + finalH + " + " + hourlyrate + "*" + (finalM/60) + " = " + finalPay);
-                var taxAmt = finalPay * 0.0765;
+                var FedTaxAmt = calculateFederalTax(finalPay);
                 
                 document.getElementById("pay_result").innerHTML = "$" + formatMoney(finalPay);
-                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Formula = Total Hours x Hourly Rate = Net Total - (Net Total * Social/Medicare Tax) = Total before Federal</p></th></tr>";
-                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>" + formatHour(finalH) + ":" + formatHour(finalM) + " Hours x $" + formatMoney(hourlyrate) + " = $" + formatMoney(finalPay) + " - (7.65% * $" + formatMoney(finalPay) + ") = $" + formatMoney(finalPay - taxAmt) + "</p></th></tr>";
+                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Formula = (Total Hours x Hourly Rate = Gross Total) - (Social/Medicare Tax + Federal Tax) = Net Total</p></th></tr>";
+                document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>(" + formatHour(finalH) + ":" + formatHour(finalM) + " Hours x $" + formatMoney(hourlyrate) + " = $" + formatMoney(finalPay) + ") - ((7.65% * $" + formatMoney(finalPay) + " = $" + SocMedTaxAmt + ") + " + FedTaxAmt + ") = $" + formatMoney(finalPay - SocMedTaxAmt - FedTaxAmt) + "</p></th></tr>";
             }
             
             function showOnlyResults(){
@@ -223,6 +242,43 @@
                 var sizeTxt = ("" + document.getElementById("timestamp").style.fontSize);
                 document.getElementById("timestamp").style.fontSize= (parseInt((sizeTxt).substr(0, sizeTxt.length-1)) - 10) + "%";
                 console.log(document.getElementById("timestamp").style.fontSize);
+            }
+            
+            function calculateFederalTax(pay){
+                var maritalStatusObject = document.getElementById("maritalStatus");
+                var maritalStatus = maritalStatusObject.options[maritalStatusObject.selectedIndex].value;
+                var withholdings = 0;
+                var step = 11;
+                var singleBase = 72;
+                var marriedBase = 226;
+                if(maritalStatus == "single"){
+                    if(pay >= 832){
+                        alert("최고 금액 $832 넘었습니다. 직접 Federal Tax 계산하세요");
+                        return 0;
+                    }
+                    withholdings = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 25, 26, 27, 29, 30, 31, 33, 34, 35, 37, 38, 39, 40, 42, 43, 44, 46, 47, 48, 50, 51, 52, 54, 55, 56, 58, 59, 60, 62, 63, 64, 66, 67, 68, 70, 71, 72, 73, 75, 76, 77, 79, 80, 81, 83, 84, 85, 87];
+                    var remainder = (pay - singleBase) & step;
+                    var index = Math.floor((pay - singleBase) / step);
+                    if(remainder != 0){
+                        index += 1;
+                    }
+                    console.log("Received index: " + index + " and the tax value: " + withholdings[index]);
+                    return withholdings[index];
+                }
+                else{
+                    if(pay >= 986){
+                        alert("최고 금액 $986 넘었습니다. 직접 Federal Tax 계산하세요");
+                        return 0;
+                    }
+                    withholdings = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 34, 35, 36, 37, 38, 39, 41, 42, 43, 45, 46, 47, 49, 50, 51, 53, 54, 55, 57, 58, 59, 61, 62, 63, 64, 66, 67, 68, 70, 71, 72, 74, 75, 76, 78, 79, 80, 82, 83];
+                    var remainder = (pay - marriedBase) & step;
+                    var index = Math.floor((pay - marriedBase) / step);
+                    if(remainder != 0){
+                        index += 1;
+                    }
+                    console.log("Received index: " + index + " and the tax value: " + withholdings[index]);
+                    return withholdings[index];                    
+                }
             }
         </script>
     </body>
