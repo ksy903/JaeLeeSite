@@ -176,6 +176,7 @@
                 var hourlyrate=parseFloat(document.getElementById("hourlyrate").value);
                 var finalPay = 0.0;
                 var SocMedTaxAmt = 0.0;
+                var overtimePay = 0.0;
                 if (finalH < 40 || (finalH == 40 && finalM == 0)){
                     console.log("Not Overtime");
                     finalPay += hourlyrate * finalH;
@@ -188,9 +189,12 @@
                     console.log("Overtime");
                     finalPay += hourlyrate * 40;
                     console.log(finalPay);
-                    finalPay += (hourlyrate * 1.5) * (finalH - 40);
+                    overtimePay += (hourlyrate * 1.5) * (finalH - 40);
+                    // finalPay += (hourlyrate * 1.5) * (finalH - 40);
                     console.log(finalPay);
-                    finalPay += (hourlyrate * 1.5) * (finalM / 60);
+                    overtimePay += (hourlyrate * 1.5) * (finalM / 60);
+                    // finalPay += (hourlyrate * 1.5) * (finalM / 60);
+                    finalPay += overtimePay;
                     console.log(hourlyrate + " * 40 + " + hourlyrate + " * " + (finalH - 40) + " + " + hourlyrate + "*" + (finalM/60) + " = " + finalPay);
                     SocMedTaxAmt += finalPay * 0.0765;
                 }
@@ -204,6 +208,9 @@
                 document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Soc/Medi Tax: $" + formatMoney(SocMedTaxAmt) + "</p></th></tr>";
                 document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Net Total: $" + formatMoney(formatMoney(finalPay) - formatMoney(SocMedTaxAmt) - formatMoney(FedTaxAmt)) + "</p></th></tr>";
                 document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Gross Total: $" + formatMoney(finalPay) + "</p></th></tr>";
+                if (overtimePay > 0) {
+                    document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Gross Total: $" + formatMoney(finalPay) + "</p></th></tr>";
+                }
             }
             
             function showOnlyResults(){
