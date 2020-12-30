@@ -208,8 +208,8 @@
                 document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Soc/Medi Tax: $" + formatMoney(SocMedTaxAmt) + "</p></th></tr>";
                 document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Net Total: $" + formatMoney(formatMoney(finalPay) - formatMoney(SocMedTaxAmt) - formatMoney(FedTaxAmt)) + "</p></th></tr>";
                 document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Gross Total: $" + formatMoney(finalPay) + "</p></th></tr>";
-                if (overtimePay > 0) {
-                    document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Gross Total: $" + formatMoney(finalPay) + "</p></th></tr>";
+                if ( overtimePay > 0 ) {
+                    document.getElementById("timestamp").innerHTML = document.getElementById("timestamp").innerHTML + "<tr><th><p>Overtime: $" + formatMoney(overtimePay) + "</p></th></tr>";
                 }
             }
             
@@ -221,13 +221,13 @@
             function clearFields(){
 				var inputsToClear = document.getElementsByClassName('userIO');
 			    
-				for(var i=0;i<inputsToClear.length;i++){
+				for ( var i=0;i<inputsToClear.length;i++ ){
 					inputsToClear[i].value = "";
 				}
 			}
             
             function removeHrFromMin(){
-                while(finalM >= 60){
+                while ( finalM >= 60 ){
                     finalM -= 60;
                     finalH++;
                 }
@@ -262,25 +262,31 @@
                 var step = 11;
                 var singleBase = 72;
                 var marriedBase = 226;
-                if(maritalStatus == "single"){
-                    if(pay >= 832){
+                if ( maritalStatus == "single" ){
+                    if ( pay >= 832 ){
                         alert("최고 금액 $832 넘었습니다. 직접 Federal Tax 계산하세요");
                         return 0;
                     }
+					else if ( pay < singleBase ){
+						return 0;
+					}
                     withholdings = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 25, 26, 27, 29, 30, 31, 33, 34, 35, 37, 38, 39, 40, 42, 43, 44, 46, 47, 48, 50, 51, 52, 54, 55, 56, 58, 59, 60, 62, 63, 64, 66, 67, 68, 70, 71, 72, 73, 75, 76, 77, 79, 80, 81, 83, 84, 85, 87];
                     var remainder = (pay - singleBase) & step;
                     var index = Math.floor((pay - singleBase) / step);
-                    if(remainder != 0){
+                    if ( remainder != 0 ){
                         index += 1;
                     }
                     console.log("Received index: " + index + " and the tax value: " + withholdings[index]);
                     return withholdings[index];
                 }
                 else{
-                    if(pay >= 986){
+                    if ( pay >= 986 ){
                         alert("최고 금액 $986 넘었습니다. 직접 Federal Tax 계산하세요");
                         return 0;
                     }
+					else if ( pay < marriedBase ){
+						return 0;
+					}
                     withholdings = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 34, 35, 36, 37, 38, 39, 41, 42, 43, 45, 46, 47, 49, 50, 51, 53, 54, 55, 57, 58, 59, 61, 62, 63, 64, 66, 67, 68, 70, 71, 72, 74, 75, 76, 78, 79, 80, 82, 83];
                     var remainder = (pay - marriedBase) & step;
                     var index = Math.floor((pay - marriedBase) / step);
