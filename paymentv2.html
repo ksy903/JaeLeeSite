@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, height=device-height" />
+        <link rel="icon" href="http://www.origami-resource-center.com/images/paper-Crane-wiki.jpg">
+        <link rel="apple-touch-icon" sizes="57x57" href="57.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="114.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="144.png" />
+        <title>Payroll Calc</title>
+    </head>
+    <body style="background-color:#ffffff;line-height: 1; align-items: center;" onload="setPage();">
+        <div id="head" style="background-color:#f27f65;">
+            <center>
+            <div id="head-title" style="padding:10px;font-size:5vh;">
+                Payroll Calculator
+            </div>
+            <center>
+        </div>
+        
+        <br>
+        
+        <div>
+            <div id="main-content" >
+                <div id="page1" class="page">
+                    <center>
+                    <div id="datablock">
+                        <div id="datablock-content">
+                        Name :
+                        <input type="text" style="font-size:2vh; width:20vh; height:2vh;" class="userIO" id="employeeName"></input>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div id="datablock">
+                        <div id="datablock-content">
+                        Pay : $
+                        <input type="number" min="0.00" step="0.01" style="font-size:2vh; width:6vh; height:2vh;" class="userIO" id="employeePay"></input>
+                        </div>
+                    </div>
+                        
+                    <br>
+                    
+                    <div id="datablock">
+                        <div id="datablock-content">
+                        Marital Status :
+                        <select id="maritalStatus" style="font-size:2vh">
+                            <option value="single">미혼</option>
+                            <option value="married">기혼</option>
+                        </select>
+                        </div>
+                    </div>
+                    
+                    <br>
+                    
+                    <div id="datablock-focus">
+                        <div id="datablock-content">
+                            <button onclick="nextPage();" id="movement-button">다음</button>
+                        </div>
+                    </div>
+                    </center>
+                </div>
+                
+                <div id="page2" class="page">
+                    <center>
+                    <div id="datablock-focus">
+                        <div id="datablock-content">
+                            <h3 id="dateText">test</h3>
+                        </div>
+                    </div>
+                    
+                    <br>
+                    
+                    <div id="datablock">
+                        <div id="datablock-content">
+                            <h3>시작 시간(시, 분):</h3>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div id="datablock">
+                        <div id="datablock-content">
+                        <input type="number" style="font-size:2vh; width:6vh; height:2vh;" class="userIO" id="start_hour"></input>
+                        시
+
+                        <input type="number" style="font-size:2vh; width:6vh; height:2vh;" class="userIO" id="start_minute"></input>
+                        분
+                        
+                        <select id="start_select" style="font-size:2vh">
+							<option value="start_am">오전</option>
+							<option value="start_pm">오후</option>
+						</select>
+                        </div>
+                    </div>
+                    
+                    <br>
+                    
+                    <div id="datablock">
+                        <div id="datablock-content">
+                            <h3>끝 시간(시, 분):</h3>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div id="datablock">
+                        <div id="datablock-content">
+                        <input type="number" style="font-size:2vh; width:6vh; height:2vh;" class="userIO" id="end_hour"></input>
+                        시
+
+                        <input type="number" style="font-size:2vh; width:6vh; height:2vh;" class="userIO" id="end_minute"></input>
+                        분
+                        
+                        <select id="end_select" style="font-size:2vh">
+							<option value="end_am">오전</option>
+							<option value="end_pm">오후</option>
+						</select>
+                        </div>
+                    </div>
+                    
+                    <br>
+                    
+                    <div id="datablock-focus">
+                        <div id="datablock-content">
+                            <button onclick="previousPage();" id="movement-button">이전</button>
+                            <button onclick="nextPage();" id="movement-button">다음</button>
+                        </div>
+                    </div>
+                    
+                    </center>
+                </div>
+                
+                <div id="page3" class="page">
+                    <center>
+                    <div id="page3-top">
+                        <div id="datablock">
+                            <div id="datablock-content">
+                                Name: 
+                                <span id="nameContent"></span>
+                            </div>
+                        </div>
+
+                        <br>
+                        
+                        <div id="datablock">
+                            <div id="datablock-content">
+                                Date: 
+                                <span id="dateContent"></span>
+                            </div>
+                        </div>
+
+                        <br>
+                        
+                        <div id="datablock">
+                            <div id="datablock-content">
+                                Pay: 
+                                <span id="payContent"></span>
+                            </div>
+                        </div>
+
+                        <br>
+                        
+                        <div id="datablock">
+                            <div id="datablock-content">
+                                Marital Status: 
+                                <span id="maritalStatusContent"></span>
+                            </div>
+                        </div>
+
+                        <br>
+                    </div>
+                    
+                    <div id="page3-body"></div>
+                    
+                    <div id="page3-bottom">
+                        <div id="datablock">
+                            <div id="datablock-content">
+                                Total Time: 
+                                <span id="totalTimeContent"></span>
+                            </div>
+                        </div>
+
+                        <br>
+                        
+                        <div id="datablock">
+                            <div id="datablock-content">
+                                Gross Pay: 
+                                <span id="grossPayContent"></span>
+                            </div>
+                        </div>
+
+                        <br>
+                        
+                        <div id="datablock">
+                            <div id="datablock-content">
+                                Fed Tax: 
+                                <span id="fedTaxContent"></span>
+                            </div>
+                        </div>
+
+                        <br>
+                        
+                        <div id="datablock">
+                            <div id="datablock-content">
+                                Soc/Medi Tax: 
+                                <span id="socMediTaxContent"></span>
+                            </div>
+                        </div>
+
+                        <br>
+                        
+                        <div id="datablock">
+                            <div id="datablock-content">
+                                Net Pay: 
+                                <span id="netPayContent"></span>
+                            </div>
+                        </div>
+
+                        <br>
+                        
+                        <div id="datablock">
+                            <div id="datablock-content">
+                                Overtime: 
+                                <span id="overtimeContent"></span>
+                            </div>
+                        </div>
+
+                        <br>
+                    </div>
+                    
+                    <div id="datablock-focus">
+                        <div id="datablock-content">
+                            <button onclick="previousPage();" id="movement-button">이전</button>
+                            <button onclick="newForm();" id="movement-button">새로</button>
+                        </div>
+                    </div>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </body>
+    
+    <style>
+        #datablock-optional{
+            background-color:#D9DEFE;
+            font-size:2vh;
+            justify-content: center;
+        }
+    
+        #datablock-focus{
+            background-color:#435CFB;
+            font-size:2vh;
+            justify-content: center;
+        }
+    
+        #datablock{
+            font-size:2vh;
+            background-color:#03e3fc;
+            justify-content: center;
+        }
+        
+        #datablock-content{
+            padding: 5px;
+            font-size: 2vh;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+        }
+        
+        #movement-button{
+            width: 60px;
+            height: 2.5vh;
+        }
+        
+        .page{
+            display: none;
+        }
+        
+        span{
+            font-weight: bold;
+        }
+    </style>
+    
+    <script src="paymentv2.js"></script>
+</html>
+    
