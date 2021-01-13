@@ -249,6 +249,24 @@ function clearForm(){
 }
 
 function newForm(){
+	
+            var Payroll = {
+            page: pageList[0],
+            name: '',
+            pay: 0.00,
+            maritalStatus: 'single',
+            PayrollDates: [
+                {startHour: '', startMinute: '', startHalf: '', endHour: '', endMinute: '', endHalf: ''},
+                {startHour: '', startMinute: '', startHalf: '', endHour: '', endMinute: '', endHalf: ''},
+                {startHour: '', startMinute: '', startHalf: '', endHour: '', endMinute: '', endHalf: ''},
+                {startHour: '', startMinute: '', startHalf: '', endHour: '', endMinute: '', endHalf: ''},
+                {startHour: '', startMinute: '', startHalf: '', endHour: '', endMinute: '', endHalf: ''},
+                {startHour: '', startMinute: '', startHalf: '', endHour: '', endMinute: '', endHalf: ''},
+                {startHour: '', startMinute: '', startHalf: '', endHour: '', endMinute: '', endHalf: ''},
+            ]
+        };
+        
+    localStorage.setItem(PayrollObjectKey, JSON.stringify(Payroll));
     localStorage.removeItem(PayrollObjectKey);
     currentDate = 0;
     currentPage = 0;
