@@ -359,6 +359,9 @@ function calculatePay(pay){
     if ( overtimePay > 0 ) {
         document.getElementById("overtimeContent").innerHTML = '$' + formatMoney(overtimePay);
     }
+    else{
+	document.getElementById("optional-overtime").style.display = 'none';
+    }
 }
 
 function showOnlyResults(){
