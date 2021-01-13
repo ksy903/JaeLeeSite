@@ -219,7 +219,7 @@ function loadPage(){
         
         document.getElementById('totalTimeContent').innerHTML = finalH + ' hours ' + finalM + ' minutes';
         
-        calculatePay();
+        calculatePay(payrollObject.pay);
     }
     else{
         console.log('Loading the date pages');
@@ -305,8 +305,8 @@ function calculateHours(date){
     return formatHour(resultH) + ' hours and ' + formatHour(resultM) + ' minutes';
 }
 
-function calculatePay(){
-    var hourlyrate=parseFloat(document.getElementById("hourlyrate").value);
+function calculatePay(pay){
+    var hourlyrate=pay;
     var finalPay = 0.0;
     var SocMedTaxAmt = 0.0;
     var overtimePay = 0.0;
