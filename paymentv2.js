@@ -249,7 +249,7 @@ function clearForm(){
 }
 
 function newForm(){
-	
+    document.getElementById('page3-body').innerHTML = '';
             var Payroll = {
             page: pageList[0],
             name: '',
