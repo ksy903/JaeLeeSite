@@ -339,6 +339,8 @@ function calculatePay(){
     document.getElementById("socMediTaxContent").innerHTML = '$' + formatMoney(SocMedTaxAmt);
     document.getElementById("netPayContent").innerHTML = '$' + formatMoney(formatMoney(finalPay) - formatMoney(SocMedTaxAmt) - formatMoney(FedTaxAmt));
     if ( overtimePay > 0 ) {
+        // Sometimes overtime doesn't show
+        document.getElementById("optional-overtime").style.display = "block";
         document.getElementById("overtimeContent").innerHTML = '$' + formatMoney(overtimePay);
     }
 }
