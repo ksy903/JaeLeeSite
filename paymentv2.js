@@ -219,7 +219,7 @@ function loadPage(){
         
         document.getElementById('totalTimeContent').innerHTML = finalH + ' hours ' + finalM + ' minutes';
         
-        calculatePay();
+        calculatePay(payrollObject.pay);
     }
     else{
         console.log('Loading the date pages');
@@ -249,6 +249,24 @@ function clearForm(){
 }
 
 function newForm(){
+    document.getElementById('page3-body').innerHTML = '';
+            var Payroll = {
+            page: pageList[0],
+            name: '',
+            pay: 0.00,
+            maritalStatus: 'single',
+            PayrollDates: [
+                {startHour: '', startMinute: '', startHalf: '', endHour: '', endMinute: '', endHalf: ''},
+                {startHour: '', startMinute: '', startHalf: '', endHour: '', endMinute: '', endHalf: ''},
+                {startHour: '', startMinute: '', startHalf: '', endHour: '', endMinute: '', endHalf: ''},
+                {startHour: '', startMinute: '', startHalf: '', endHour: '', endMinute: '', endHalf: ''},
+                {startHour: '', startMinute: '', startHalf: '', endHour: '', endMinute: '', endHalf: ''},
+                {startHour: '', startMinute: '', startHalf: '', endHour: '', endMinute: '', endHalf: ''},
+                {startHour: '', startMinute: '', startHalf: '', endHour: '', endMinute: '', endHalf: ''},
+            ]
+        };
+        
+    localStorage.setItem(PayrollObjectKey, JSON.stringify(Payroll));
     localStorage.removeItem(PayrollObjectKey);
     currentDate = 0;
     currentPage = 0;
@@ -305,8 +323,8 @@ function calculateHours(date){
     return formatHour(resultH) + ' hours and ' + formatHour(resultM) + ' minutes';
 }
 
-function calculatePay(){
-    var hourlyrate=parseFloat(document.getElementById("hourlyrate").value);
+function calculatePay(pay){
+    var hourlyrate=pay;
     var finalPay = 0.0;
     var SocMedTaxAmt = 0.0;
     var overtimePay = 0.0;
@@ -342,6 +360,9 @@ function calculatePay(){
         // Sometimes overtime doesn't show
         document.getElementById("optional-overtime").style.display = "block";
         document.getElementById("overtimeContent").innerHTML = '$' + formatMoney(overtimePay);
+    }
+    else{
+	document.getElementById("optional-overtime").style.display = 'none';
     }
 }
 
