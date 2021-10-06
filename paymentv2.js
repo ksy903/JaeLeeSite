@@ -30,12 +30,12 @@ function setPage(){
     payrollObject = null;
     
     if(payrollObject){
-        console.log('Using old object');
+        // console.log('Using old object');
         newObject = false;
         currentPage = payrollObject.page;
     }
     else{
-        console.log('Creating new object');
+        // console.log('Creating new object');
         finalH=0;
         finalM=0;
         newObject = true;
@@ -61,7 +61,7 @@ function setPage(){
         currentPage = pageList[0];
     }
     
-    console.log(currentPage);
+    // console.log(currentPage);
     
     loadPage();
 }
@@ -69,7 +69,7 @@ function setPage(){
 function nextPage(){
     saveData();
     
-    console.log('Going to next page');
+    // console.log('Going to next page');
     var i = 0;
     for(i = 0; i < pageList.length; i++){
         if(currentPage === pageList[i]){
@@ -94,7 +94,7 @@ function nextPage(){
 function previousPage(){
     saveData();
     
-    console.log('Going to previous page');
+    // console.log('Going to previous page');
     var i = 0;
     for(i = 0; i < pageList.length; i++){
         if(currentPage === pageList[i]){
@@ -117,12 +117,12 @@ function previousPage(){
 }
 
 function saveData(){
-    console.log('Saving current page data');
+    // console.log('Saving current page data');
     
     var payrollObject = JSON.parse(localStorage.getItem(PayrollObjectKey));
     
     if(pageList[0] === currentPage){
-        console.log('Saving employee data page');
+        // console.log('Saving employee data page');
         var name = document.getElementById('employeeName').value;
         var pay = document.getElementById('employeePay').value;
         var maritalStatus = document.getElementById('maritalStatus').options[document.getElementById('maritalStatus').selectedIndex].value;
@@ -132,7 +132,7 @@ function saveData(){
         payrollObject.maritalStatus = maritalStatus;
     }
     else if(pageList[pageList.length - 1] != currentPage){
-        console.log('Saving date pages');
+        // console.log('Saving date pages');
         
         var startH = document.getElementById('start_hour').value;
         var startM = document.getElementById("start_minute").value;
@@ -151,14 +151,14 @@ function saveData(){
     else{
         document.getElementById('page3-body').innerHTML = '';
     }
-    console.log(JSON.stringify(payrollObject));
+    // console.log(JSON.stringify(payrollObject));
     localStorage.setItem(PayrollObjectKey, JSON.stringify(payrollObject));
 }
 
 function loadPage(){
     clearForm();
     
-    console.log('Loading ' + currentPage);
+    // console.log('Loading ' + currentPage);
     
     var payrollObject = JSON.parse(localStorage.getItem(PayrollObjectKey));
     
@@ -167,7 +167,7 @@ function loadPage(){
     }
     
     if(currentPage === pageList[0]){
-        console.log('Loading employee data page');
+        // console.log('Loading employee data page');
         document.getElementById('page1').style.display = 'block';
         document.getElementById('page2').style.display = 'none';
         document.getElementById('page3').style.display = 'none';
@@ -178,7 +178,7 @@ function loadPage(){
         document.getElementById('maritalStatus').value = payrollObject.maritalStatus;
     }
     else if(currentPage === pageList[pageList.length - 1]){
-        console.log('Loading results page');
+        // console.log('Loading results page');
         document.getElementById('page1').style.display = 'none';
         document.getElementById('page2').style.display = 'none';
         document.getElementById('page3').style.display = 'block';
@@ -218,11 +218,12 @@ function loadPage(){
         }
         
         document.getElementById('totalTimeContent').innerHTML = finalH + ' hours ' + finalM + ' minutes';
-        
-        calculatePay(payrollObject.pay);
+        var resultsCopy = payrollObject.name + ",,";
+        resultsCopy = resultsCopy + calculatePay(payrollObject.pay);
+        console.log(resultsCopy);
     }
     else{
-        console.log('Loading the date pages');
+        // console.log('Loading the date pages');
         document.getElementById('page1').style.display = 'none';
         document.getElementById('page2').style.display = 'block';
         document.getElementById('page3').style.display = 'none';
@@ -287,7 +288,7 @@ function calculateHours(date){
     var startHalf = parseInt(payrollObject.PayrollDates[date].startHalf);
     var endHalf = parseInt(payrollObject.PayrollDates[date].endHalf);
     
-    console.log(dateList[date] + " " + startH + " " + startM + " " + endH + " " + endM + " " + startHalf  + " " + endHalf);
+    // console.log(dateList[date] + " " + startH + " " + startM + " " + endH + " " + endM + " " + startHalf  + " " + endHalf);
     
     if(startHalf == 1 && startH != 12){
         startH += 12;
@@ -296,7 +297,7 @@ function calculateHours(date){
         endH += 12;
     }
     
-    console.log(startH + " " + startM + " " + endH + " " + endM + " " + startHalf  + " " + endHalf);
+    // console.log(startH + " " + startM + " " + endH + " " + endM + " " + startHalf  + " " + endHalf);
     
     var resultH = 0, resultM = 0;
     if(endM - startM < 0){
@@ -311,7 +312,7 @@ function calculateHours(date){
     finalH += resultH;
     finalM += resultM;
     
-    console.log('Adding hours for ' + dateList[date] + ': Adding ' + formatHour(resultH) + ':' + formatHour(resultM) + " = new totals: " + formatHour(finalH) + ':' + formatHour(finalM));
+    // console.log('Adding hours for ' + dateList[date] + ': Adding ' + formatHour(resultH) + ':' + formatHour(resultM) + " = new totals: " + formatHour(finalH) + ':' + formatHour(finalM));
     
     removeHrFromMin();
     // document.getElementById("time_result").innerHTML = formatHour(finalH) + ":" + formatHour(finalM);
@@ -329,24 +330,24 @@ function calculatePay(pay){
     var SocMedTaxAmt = 0.0;
     var overtimePay = 0.0;
     if (finalH < 40 || (finalH == 40 && finalM == 0)){
-        console.log("Not Overtime");
+        // console.log("Not Overtime");
         finalPay += hourlyrate * finalH;
-        console.log(finalPay);
+        // console.log(finalPay);
         finalPay += hourlyrate * (finalM / 60);
-        console.log(hourlyrate + "*" + finalH + " + " + hourlyrate + "*" + (finalM/60) + " = " + finalPay);
+        // console.log(hourlyrate + "*" + finalH + " + " + hourlyrate + "*" + (finalM/60) + " = " + finalPay);
         SocMedTaxAmt += finalPay * 0.0765;
     }
     else{
-        console.log("Overtime");
+        // console.log("Overtime");
         finalPay += hourlyrate * 40;
-        console.log(finalPay);
+        // console.log(finalPay);
         overtimePay += (hourlyrate * 1.5) * (finalH - 40);
         // finalPay += (hourlyrate * 1.5) * (finalH - 40);
-        console.log(finalPay);
+        // console.log(finalPay);
         overtimePay += (hourlyrate * 1.5) * (finalM / 60);
         // finalPay += (hourlyrate * 1.5) * (finalM / 60);
         finalPay += overtimePay;
-        console.log(hourlyrate + " * 40 + " + hourlyrate + " * " + (finalH - 40) + " + " + hourlyrate + "*" + (finalM/60) + " = " + finalPay);
+        // console.log(hourlyrate + " * 40 + " + hourlyrate + " * " + (finalH - 40) + " + " + hourlyrate + "*" + (finalM/60) + " = " + finalPay);
         SocMedTaxAmt += finalPay * 0.0765;
     }
     
@@ -356,14 +357,19 @@ function calculatePay(pay){
     document.getElementById("fedTaxContent").innerHTML = '$' + formatMoney(FedTaxAmt);
     document.getElementById("socMediTaxContent").innerHTML = '$' + formatMoney(SocMedTaxAmt);
     document.getElementById("netPayContent").innerHTML = '$' + formatMoney(formatMoney(finalPay) - formatMoney(SocMedTaxAmt) - formatMoney(FedTaxAmt));
+    
+    var returnText = "$" + formatMoney(FedTaxAmt) + "," + "$" + formatMoney(SocMedTaxAmt) + "," + "$" + (formatMoney(formatMoney(finalPay) - formatMoney(SocMedTaxAmt) - formatMoney(FedTaxAmt))) + "," + "$" + formatMoney(finalPay);
+    
     if ( overtimePay > 0 ) {
         // Sometimes overtime doesn't show
         document.getElementById("optional-overtime").style.display = "block";
         document.getElementById("overtimeContent").innerHTML = '$' + formatMoney(overtimePay);
+        returnText = returnText + ",," + "$" + formatMoney(overtimePay) + " Overtime";
     }
     else{
 	document.getElementById("optional-overtime").style.display = 'none';
     }
+    return returnText;
 }
 
 function showOnlyResults(){
@@ -415,7 +421,7 @@ function calculateFederalTax(pay){
         if ( remainder != 0 ){
             index += 1;
         }
-        console.log("Received index: " + index + " and the tax value: " + withholdings[index]);
+        // console.log("Received index: " + index + " and the tax value: " + withholdings[index]);
         return withholdings[index];
     }
     else{
@@ -432,7 +438,7 @@ function calculateFederalTax(pay){
         if(remainder != 0){
             index += 1;
         }
-        console.log("Received index: " + index + " and the tax value: " + withholdings[index]);
+        // console.log("Received index: " + index + " and the tax value: " + withholdings[index]);
         return withholdings[index];                    
     }
 }
