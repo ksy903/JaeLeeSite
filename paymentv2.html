@@ -84,10 +84,10 @@
 
                     <div id="datablock">
                         <div id="datablock-content">
-                        <input type="number" style="font-size:2vh; width:6vh; height:2vh;" class="userIO" id="start_hour"></input>
+                        <input type="number" style="font-size:2vh; width:6vh; height:2vh;" class="userIO" id="start_hour" min="1" max="12"></input>
                         시
 
-                        <input type="number" style="font-size:2vh; width:6vh; height:2vh;" class="userIO" id="start_minute"></input>
+                        <input type="number" style="font-size:2vh; width:6vh; height:2vh;" class="userIO" id="start_minute" min="0" max="59"></input>
                         분
                         
                         <select id="start_select" style="font-size:2vh">
@@ -109,10 +109,10 @@
 
                     <div id="datablock">
                         <div id="datablock-content">
-                        <input type="number" style="font-size:2vh; width:6vh; height:2vh;" class="userIO" id="end_hour"></input>
+                        <input type="number" style="font-size:2vh; width:6vh; height:2vh;" class="userIO" id="end_hour" min="1" max="12"></input>
                         시
 
-                        <input type="number" style="font-size:2vh; width:6vh; height:2vh;" class="userIO" id="end_minute"></input>
+                        <input type="number" style="font-size:2vh; width:6vh; height:2vh;" class="userIO" id="end_minute" min="0" max="59"></input>
                         분
                         
                         <select id="end_select" style="font-size:2vh">
@@ -243,6 +243,10 @@
                     </center>
                 </div>
             </div>
+            <div id="footer">
+                <center><p style="font-size:1vh">By using the calculator application, you agree that creator of this application (the owner of the github account this website is hosted on) free of any liability from miscalculation or other issues that may occur from said use of the application. This application in no way guarantees any service or behavior or accuracy, I don't recommend you using it. </p></center>
+            </div>
+            
         </div>
     </body>
     
@@ -286,6 +290,44 @@
             font-weight: bold;
         }
     </style>
+    
+    <script>
+        var startHour = document.getElementById('start_hour');
+        var startMinute = document.getElementById('start_minute');
+        var endHour = document.getElementById('end_hour');
+        var endMinute = document.getElementById('end_minute');
+        
+        var hourInputHandler = function(e){
+            console.log('in hour input handler: ' + e.target.value);
+            if(parseInt(e.target.value) < 1){
+                alert('Bad Hour Input! Setting to 1');
+                e.target.value = 1;
+            }
+            if(parseInt(e.target.value) > 12){
+                alert('Bad Hour Input! Setting to 12');
+                e.target.value = 12;
+            }
+        }
+        
+        var minuteInputHandler = function(e){
+            console.log('in minute input handler: ' + e.target.value);
+            if(parseInt(e.target.value) < 0){
+                alert('Bad Minute Input! Setting to 0');
+                e.target.value = 0;
+            }
+            if(parseInt(e.target.value) > 59){
+                alert('Bad Minute Input! Setting to 59');
+                e.target.value = 59;
+            }
+        }
+        
+        startHour.addEventListener('input', hourInputHandler);
+        endHour.addEventListener('input', hourInputHandler);
+        
+        endMinute.addEventListener('input', minuteInputHandler);
+        startMinute.addEventListener('input', minuteInputHandler);
+        
+    </script>
     
     <script src="paymentv2.js"></script>
 </html>
