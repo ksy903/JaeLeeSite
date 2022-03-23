@@ -298,7 +298,7 @@
         var endMinute = document.getElementById('end_minute');
         
         var hourInputHandler = function(e){
-            console.log('in hour input handler: ' + e.target.value);
+            // console.log('in hour input handler: ' + e.target.value);
             if(parseInt(e.target.value) < 1){
                 alert('Bad Hour Input! Setting to 1');
                 e.target.value = 1;
@@ -310,7 +310,7 @@
         }
         
         var minuteInputHandler = function(e){
-            console.log('in minute input handler: ' + e.target.value);
+            // console.log('in minute input handler: ' + e.target.value);
             if(parseInt(e.target.value) < 0){
                 alert('Bad Minute Input! Setting to 0');
                 e.target.value = 0;
