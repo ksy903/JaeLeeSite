@@ -219,7 +219,7 @@ function loadPage(){
         
         document.getElementById('totalTimeContent').innerHTML = finalH + ' hours ' + finalM + ' minutes';
         var resultsCopy = payrollObject.name + ",,";
-        resultsCopy = resultsCopy + calculatePay(payrollObject.pay);
+        resultsCopy = resultsCopy + calculatePay(payrollObject.pay) + ',' + payrollObject.pay;
         console.log(resultsCopy);
     }
     else{
