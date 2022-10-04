@@ -219,7 +219,7 @@ function loadPage(){
         
         document.getElementById('totalTimeContent').innerHTML = finalH + ' hours ' + finalM + ' minutes';
         var resultsCopy = payrollObject.name + ",,";
-        resultsCopy = resultsCopy + calculatePay(payrollObject.pay) + ',' + payrollObject.pay;
+        resultsCopy = resultsCopy + calculatePay(payrollObject.pay) + ',,' + payrollObject.pay;
         console.log(resultsCopy);
     }
     else{
@@ -367,7 +367,8 @@ function calculatePay(pay){
         returnText = returnText + ",," + "$" + formatMoney(overtimePay) + " Overtime";
     }
     else{
-	document.getElementById("optional-overtime").style.display = 'none';
+        document.getElementById("optional-overtime").style.display = 'none';
+        returnText = returnText + ",,,";
     }
     return returnText;
 }
