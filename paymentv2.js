@@ -368,7 +368,7 @@ function calculatePay(pay){
     }
     else{
         document.getElementById("optional-overtime").style.display = 'none';
-        returnText = returnText + ",,,";
+        returnText = returnText + ",,";
     }
     return returnText;
 }
